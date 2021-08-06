@@ -52,13 +52,7 @@ module.exports = {
     modeloUsuario.findByIdAndUpdate(
       req.params.id,
       {
-        _nombre: req.body._nombre,
         email: req.body.email,
-        _identificacion: req.body.identificacion,
-        _telefono: req.body._telefono,
-        _empresa: req.body._empresa,
-        _desempleo: req.body._desempleo,
-        _direccion: req.body._direccion,
         sitioWeb: req.body.sitioWeb,
         redesSociales: req.body.redesSociales,
         acercaDe: req.body.acercaDe,

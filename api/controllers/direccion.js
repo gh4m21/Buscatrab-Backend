@@ -118,7 +118,7 @@ module.exports = {
         } else {
           //Actualizar desempleo
           modeloUsuario.findByIdAndUpdate(
-            req.body.idDesempleo,
+            req.body.idUsuario,
             {
               _direccion: result._id,
             },
