@@ -33,6 +33,10 @@ const schemaInterview = new Schema({
     type: Boolean,
     trim: true,
   },
+  isAceptado: {
+    type: Boolean,
+    trim: true,
+  },
   fechaCreacion: {
     type: Date,
     required: true,

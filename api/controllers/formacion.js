@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloFormacion = require("../models/formacion");
+const modeloDesempleo = require("../models/desempleos");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -33,9 +34,9 @@ module.exports = {
       } else {
         for (let formacion of formaciones) {
           listaFormacion.push({
-            id: formacion._id,
+            _id: formacion._id,
             nombreInstituto: formacion.nombreInstituto,
-            ciudad: formacion.ciudad,
+            carrera: formacion.carrera,
             nivel: formacion.nivel,
             fechaInicial: formacion.fechaInicial,
             fechaFinal: formacion.fechaFinal,
@@ -61,7 +62,7 @@ module.exports = {
       req.params.id,
       {
         nombreInstituto: req.body.nombreInstituto,
-        ciudad: req.body.ciudad,
+        carrera: req.body.carrera,
         nivel: req.body.nivel,
         fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
@@ -90,11 +91,24 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Formacion borrado con exito",
-            data: null,
-          });
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $pull: { _formacion: req.params.id },
+            },
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Formacion borrado con exito",
+                  data: null,
+                });
+              }
+            }
+          );
         }
       }
     );
@@ -104,7 +118,7 @@ module.exports = {
     modeloFormacion.create(
       {
         nombreInstituto: req.body.nombreInstituto,
-        ciudad: req.body.ciudad,
+        carrera: req.body.carrera,
         nivel: req.body.nivel,
         fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
@@ -117,13 +131,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Formacion creado con exito",
-            data: {
-              formacion: result,
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $push: { _formacion: result._id },
             },
-          });
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Formacion creado con exito",
+                  data: {
+                    formacion: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

@@ -33,12 +33,13 @@ module.exports = {
       } else {
         for (let interview of interviews) {
           listaInterview.push({
-            id: interview._id,
+            _id: interview._id,
             fecha: interview.fecha,
             hora: interview.hora,
             asignacionTo: interview.asignacionTo,
             isAnulado: interview.isAnulado,
             isActivado: interview.isActivado,
+            isAceptado: interview.isAceptado,
             fechaCreacion: interview.fechaCreacion,
             fechaModificacion: interview.fechaModificacion,
           });
@@ -64,6 +65,7 @@ module.exports = {
         asignacionTo: req.body.asignacionTo,
         isAnulado: req.body.isAnulado,
         isActivado: req.body.isActivado,
+        isAceptado: req.body.isActivado,
         fechaModificacion: Date.now(),
       },
       function (err, interviewInfo) {
@@ -103,8 +105,9 @@ module.exports = {
         fecha: req.body.fecha,
         hora: req.body.hora,
         asignacionTo: req.body.asignacionTo,
-        isAnulado: req.body.isAnulado,
-        isActivado: req.body.isActivado,
+        isAnulado: false,
+        isActivado: true,
+        isAceptado: false,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

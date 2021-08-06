@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloIdentificacion = require("../models/identificacion");
+const modeloUsuario = require("../models/usuarios");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -106,13 +107,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Identificacion creado con exito",
-            data: {
-              identificacion: result,
+          //Actualizar Usuarios
+          modeloUsuario.findByIdAndUpdate(
+            req.body.idUsuario,
+            {
+              _identificacion: result._id,
             },
-          });
+            function (err, usuarioInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Identificacion creado con exito",
+                  data: {
+                    identificacion: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloLenguaje = require("../models/lenguajes");
+const modeloDesempleo = require("../models/desempleos");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -33,7 +34,7 @@ module.exports = {
       } else {
         for (let lenguaje of lenguajes) {
           listaLenguaje.push({
-            id: lenguaje._id,
+            _id: lenguaje._id,
             descripcion: lenguaje.descripcion,
             nivel: lenguaje.nivel,
             fechaCreacion: lenguaje.fechaCreacion,
@@ -81,11 +82,24 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Lenguaje borrado con exito",
-            data: null,
-          });
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $pull: { _lenguaje: req.params.id },
+            },
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Lenguaje borrado con exito",
+                  data: null,
+                });
+              }
+            }
+          );
         }
       }
     );
@@ -103,13 +117,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Lenguaje creado con exito",
-            data: {
-              lenguaje: result,
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $push: { _lenguaje: result._id },
             },
-          });
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Lenguaje creado con exito",
+                  data: {
+                    lenguaje: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

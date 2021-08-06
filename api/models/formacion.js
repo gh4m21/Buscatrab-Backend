@@ -15,7 +15,7 @@ const schemaFormacion = new Schema({
     trim: true,
     required: true,
   },
-  ciudad: {
+  carrera: {
     type: String,
     trim: true,
     required: true,

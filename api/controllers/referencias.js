@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloReferencia = require("../models/referencias");
+const modeloDesempleo = require("../models/desempleos");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -33,7 +34,7 @@ module.exports = {
       } else {
         for (let referencia of referencias) {
           listaReferencia.push({
-            id: referencia._id,
+            _id: referencia._id,
             nombre: referencia.nombre,
             telefono: referencia.telefono,
             email: referencia.email,
@@ -87,11 +88,24 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Referencia borrado con exito",
-            data: null,
-          });
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $pull: { _referencia: req.params.id },
+            },
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Referencia borrado con exito",
+                  data: null,
+                });
+              }
+            }
+          );
         }
       }
     );
@@ -112,13 +126,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Referencia creado con exito",
-            data: {
-              referencia: result,
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $push: { _referencia: result._id },
             },
-          });
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Referencia creado con exito",
+                  data: {
+                    referencia: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

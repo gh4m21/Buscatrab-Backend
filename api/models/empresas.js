@@ -15,18 +15,8 @@ const schemaEmpresas = new Schema({
     ref: "Usuarios",
     trim: true,
   },
-  _nombre: {
-    type: Schema.Types.ObjectId,
-    ref: "Nombres",
-    trim: true,
-    required: true,
-  },
   fechaFundacion: {
     type: Date,
-    trim: true,
-  },
-  descripcion: {
-    type: String,
     trim: true,
   },
   _categoriaEmpresa: {
@@ -34,22 +24,6 @@ const schemaEmpresas = new Schema({
     ref: "CategoriaEmpresas",
     trim: true,
   },
-  _direccion: {
-    type: Schema.Types.ObjectId,
-    ref: "Direccion",
-    trim: true,
-    required: true,
-  },
-  sitioWeb: {
-    type: String,
-    trim: true,
-  },
-  redesSociales: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
   publicacionTrabajo: [
     {
       type: Schema.Types.ObjectId,

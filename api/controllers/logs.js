@@ -33,7 +33,7 @@ module.exports = {
       } else {
         for (let log of logs) {
           listaLogs.push({
-            id: log._id,
+            _id: log._id,
             _usuario: log._usuario,
             accion: log.accion,
             descripcion: log.descripcion,

@@ -33,7 +33,7 @@ module.exports = {
       } else {
         for (let moneda of monedas) {
           listaMonedas.push({
-            id: moneda._id,
+            _id: moneda._id,
             descripcion: moneda.descripcion,
             fechaCreacion: moneda.fechaCreacion,
             fechaModificacion: moneda.fechaModificacion,

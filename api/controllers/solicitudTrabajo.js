@@ -36,7 +36,7 @@ module.exports = {
       } else {
         for (let solicitud of solicitudTrabajo) {
           listaSolicitudTrabajo.push({
-            id: solicitud._id,
+            _id: solicitud._id,
             _publicacionTrabajo: solicitud._publicacionTrabajo,
             _desempleo: solicitud._desempleo,
             _cv: solicitud._cv,
@@ -113,7 +113,7 @@ module.exports = {
         _interview: req.body._interview,
         motivacion: req.body.motivacion,
         isAceptado: req.body.isAceptado,
-        isActivo: req.body.isActivo,
+        isActivo: true,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

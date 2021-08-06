@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloDireccion = require("../models/direccion");
+const modeloUsuario = require("../models/usuarios");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -115,13 +116,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Direccion creado con exito",
-            data: {
-              direccion: result,
+          //Actualizar desempleo
+          modeloUsuario.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              _direccion: result._id,
             },
-          });
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Direccion creado con exito",
+                  data: {
+                    direccion: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

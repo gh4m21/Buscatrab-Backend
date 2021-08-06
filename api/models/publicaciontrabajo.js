@@ -21,12 +21,6 @@ const schemaPublicacionTrabajo = new Schema({
     trim: true,
     required: true,
   },
-  _direccion: {
-    type: Schema.Types.ObjectId,
-    ref: "Direccion",
-    trim: true,
-    required: true,
-  },
   posicion: {
     type: String,
     trim: true,
@@ -51,12 +45,10 @@ const schemaPublicacionTrabajo = new Schema({
   responsabilidad: {
     type: String,
     trim: true,
-    required: true,
   },
   requerimientos: {
     type: String,
     trim: true,
-    required: true,
   },
   _nivelCarrera: {
     type: Schema.Types.ObjectId,
@@ -67,7 +59,6 @@ const schemaPublicacionTrabajo = new Schema({
   experienciaTrabajo: {
     type: String,
     trim: true,
-    required: true,
   },
   lenguaje: {
     type: String,
@@ -77,28 +68,23 @@ const schemaPublicacionTrabajo = new Schema({
   salario: {
     type: String,
     trim: true,
-    required: true,
   },
   _moneda: {
     type: Schema.Types.ObjectId,
     ref: "Monedas",
     trim: true,
-    required: true,
   },
   periodoSalarial: {
     type: String,
     trim: true,
-    required: true,
   },
   cantidadTiempo: {
     type: String,
     trim: true,
-    required: true,
   },
   cantidadPersonas: {
     type: String,
     trim: true,
-    required: true,
   },
   isActivado: {
     type: Boolean,

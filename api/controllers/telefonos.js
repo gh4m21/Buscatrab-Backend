@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloTelefono = require("../models/telefonos");
+const modeloUsuario = require("../models/usuarios");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -17,7 +18,7 @@ module.exports = {
           status: 200,
           message: "Telefono encontrado",
           data: {
-            telefonos: telefonoInfo,
+            telefono: telefonoInfo,
           },
         });
       }
@@ -33,7 +34,7 @@ module.exports = {
       } else {
         for (let telefono of telefonos) {
           listaTelefono.push({
-            id: telefono._id,
+            _id: telefono._id,
             tipoTelefono: telefono.tipoTelefono,
             descripcion: telefono.descripcion,
             fechaCreacion: telefono.fechaCreacion,
@@ -67,7 +68,7 @@ module.exports = {
           res.json({
             status: 200,
             message: "Telefono actualizado con exito",
-            data: null,
+            telefono: telefonoInfo,
           });
         }
       }
@@ -103,13 +104,30 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Telefono creado con exito",
-            data: {
-              telefonos: result,
-            },
-          });
+          //Actualiza el usuario
+          if (!err && result) {
+            modeloUsuario.findByIdAndUpdate(
+              req.body.idUsuario,
+              {
+                _telefono: [result._id],
+              },
+              function (err, usuarioInfo) {
+                if (!err && usuarioInfo) {
+                  res.json({
+                    status: 200,
+                    message: "Telefono creado con exito",
+                    data: {
+                      telefono: result,
+                    },
+                  });
+                } else {
+                  next(err);
+                }
+              }
+            );
+          } else {
+            next(err);
+          }
         }
       }
     );

@@ -7,21 +7,28 @@
 const modeloUsuario = require("../models/usuarios");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const helpers = require("../../utils/helpers");
 
 module.exports = {
   create: function (req, res, next) {
     modeloUsuario.create(
       {
+        _nombre: null,
         email: req.body.email,
+        _identificacion: null,
         password: req.body.password,
         _telefono: [],
         tipoUsuario: req.body.tipoUsuario,
+        sitioWeb: null,
+        _direccion: null,
+        redesSociales: [],
         _empresa: null,
         _desempleo: null,
         isActivado: true,
         isNotifSms: false,
         isNotifEmail: false,
         isBan: false,
+        acercaDe: null,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },
@@ -45,10 +52,16 @@ module.exports = {
     modeloUsuario.findByIdAndUpdate(
       req.params.id,
       {
+        _nombre: req.body._nombre,
+        email: req.body.email,
+        _identificacion: req.body.identificacion,
         _telefono: req.body._telefono,
-        tipoUsuario: req.body.tipoUsuario,
         _empresa: req.body._empresa,
         _desempleo: req.body._desempleo,
+        _direccion: req.body._direccion,
+        sitioWeb: req.body.sitioWeb,
+        redesSociales: req.body.redesSociales,
+        acercaDe: req.body.acercaDe,
         isActivado: req.body.isActivado,
         isNotifSms: req.body.isNotifSms,
         isNotifEmail: req.body.isNotifEmail,
@@ -62,7 +75,7 @@ module.exports = {
           res.json({
             status: 200,
             message: "Usuario actualizado con exito",
-            data: usuarioInfo,
+            usuario: usuarioInfo,
           });
         }
       }
@@ -84,7 +97,6 @@ module.exports = {
   },
 
   getById: function (req, res, next) {
-    console.log(req.body);
     modeloUsuario.findById(req.params.id, function (err, usuarioInfo) {
       if (err) {
         next(err);
@@ -109,12 +121,18 @@ module.exports = {
       } else {
         for (let usuario of usuarios) {
           listaUsuario.push({
-            id: usuario._id,
+            _id: usuario._id,
+            _nombre: usuario._nombre,
+            _identificacion: usuario.identificacion,
             email: usuario.email,
             _telefono: usuario._telefono,
             tipoUsuario: usuario.tipoUsuario,
             _empresa: usuario._empresa,
             _desempleo: usuario._desempleo,
+            _direccion: usuario._direccion,
+            sitioWeb: usuario.sitioWeb,
+            redesSociales: usuario.redesSociales,
+            acercaDe: usuario.acercaDe,
             isActivado: usuario.isActivado,
             isNotiSms: usuario.isNotiSms,
             isNotifEmail: usuario.isNotifEmail,
@@ -133,6 +151,33 @@ module.exports = {
         });
       }
     });
+  },
+
+  findUserByToken: function (req, res, next) {
+    const token = req.headers["token"];
+    const tokenDecode = jwt.decode(token);
+    const isExpiry = helpers.isExpiryToken(tokenDecode.exp);
+    if (isExpiry) {
+      modeloUsuario.findById(tokenDecode.id, function (err, usuarioInfo) {
+        if (err) {
+          next(err);
+        } else {
+          res.json({
+            status: 200,
+            message: "Usuario encontrado",
+            data: {
+              usuario: usuarioInfo,
+            },
+          });
+        }
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        mnessage: "Token expired",
+        error: "Token expired. Connect again",
+      });
+    }
   },
 
   authenticate: function (req, res, next) {

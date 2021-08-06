@@ -14,5 +14,6 @@ router.put("/edit/:id", userController.updateById);
 router.delete("/delete/:id", userController.deleteById);
 router.get("/getOne/:id", userController.getById);
 router.get("/getAll", userController.getAll);
+router.get("/findUserByToken", userController.findUserByToken);
 
 module.exports = router;

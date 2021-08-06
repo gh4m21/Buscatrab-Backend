@@ -12,10 +12,20 @@ const saltRounds = 10;
 const Schema = mongoose.Schema;
 
 const schemaUsuario = new Schema({
+  foto: {
+    type: String,
+    trim: true,
+  },
+  _nombre: {
+    type: Schema.Types.ObjectId,
+    ref: "Nombres",
+    trim: true,
+  },
   email: {
     type: String,
     trim: true,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -28,6 +38,11 @@ const schemaUsuario = new Schema({
       ref: "Telefonos",
     },
   ],
+  _direccion: {
+    type: Schema.Types.ObjectId,
+    ref: "Direccion",
+    trim: true,
+  },
   tipoUsuario: {
     type: String,
     required: true,
@@ -41,6 +56,20 @@ const schemaUsuario = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Desempleos",
     default: null,
+  },
+  sitioWeb: {
+    type: String,
+    trim: true,
+  },
+  redesSociales: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
+  acercaDe: {
+    type: String,
+    trim: true,
   },
   isActivado: {
     type: Boolean,

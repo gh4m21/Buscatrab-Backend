@@ -36,7 +36,7 @@ module.exports = {
       } else {
         for (let nivelCarrera of nivelCarreras) {
           listaNivelCarrera.push({
-            id: nivelCarrera._id,
+            _id: nivelCarrera._id,
             descripcion: nivelCarrera.descripcion,
             fechaCreacion: nivelCarrera.fechaCreacion,
             fechaModificacion: nivelCarrera.fechaModificacion,

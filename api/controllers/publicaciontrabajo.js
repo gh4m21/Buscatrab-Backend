@@ -36,10 +36,9 @@ module.exports = {
       } else {
         for (let publicacion of publicacionTrabajo) {
           listaPublicacionTrabajo.push({
-            id: publicacion._id,
+            _id: publicacion._id,
             titulo: publicacion.titulo,
             _empresa: publicacion._empresa,
-            _direccion: publicacion._direccion,
             posicion: publicacion.posicion,
             _categoriaTrabajo: publicacion._categoriaTrabajo,
             descripcion: publicacion.descripcion,
@@ -79,7 +78,6 @@ module.exports = {
       {
         titulo: req.body.titulo,
         _empresa: req.body._empresa,
-        _direccion: req.body._direccion,
         posicion: req.body.posicion,
         _categoriaTrabajo: req.body._categoriaTrabajo,
         descripcion: req.body.descripcion,
@@ -135,7 +133,6 @@ module.exports = {
       {
         titulo: req.body.titulo,
         _empresa: req.body._empresa,
-        _direccion: req.body._direccion,
         posicion: req.body.posicion,
         _categoriaTrabajo: req.body._categoriaTrabajo,
         descripcion: req.body.descripcion,
@@ -150,7 +147,7 @@ module.exports = {
         periodoSalarial: req.body.periodoSalarial,
         cantidadTiempo: req.body.cantidadTiempo,
         cantidadPersonas: req.body.cantidadPersonas,
-        isActivado: req.body.isActivado,
+        isActivado: true,
         fechaInicio: req.body.fechaInicio,
         fechaFinal: req.body.fechaFinal,
         fechaCreacion: Date.now(),

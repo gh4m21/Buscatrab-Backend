@@ -65,26 +65,26 @@ app.use("/usuarios", usuarios);
 
 //Ruta privada
 //validarUsuario agregarla en la mitad
-app.use("/categoriaEmpresas", categoriaEmpresas);
-app.use("/categoriaTrabajo", categoriaTrabajo);
-app.use("/cv", cv);
-app.use("/desempleos", desempleos);
-app.use("/direccion", direccion);
-app.use("/empresas", empresas);
-app.use("/experiencias", experiencias);
-app.use("/formacion", formacion);
-app.use("/identificacion", identificacion);
-app.use("/interview", interview);
-app.use("/lenguajes", lenguajes);
-app.use("/logs", logs);
-app.use("/monedas", monedas);
-app.use("/nivelCarrera", nivelCarrera);
-app.use("/nombres", nombres);
-app.use("/notificacion", notificacion);
-app.use("/publicaciontrabajo", publicacionTrabajo);
-app.use("/referencias", referencias);
-app.use("/solicitudTrabajo", solicitudTrabajo);
-app.use("/telefonos", telefonos);
+app.use("/categoriaEmpresas", validarUsuario, categoriaEmpresas);
+app.use("/categoriaTrabajo", validarUsuario, categoriaTrabajo);
+app.use("/cv", validarUsuario, cv);
+app.use("/desempleos", validarUsuario, desempleos);
+app.use("/direccion", validarUsuario, direccion);
+app.use("/empresas", validarUsuario, empresas);
+app.use("/experiencias", validarUsuario, experiencias);
+app.use("/formacion", validarUsuario, formacion);
+app.use("/identificacion", validarUsuario, identificacion);
+app.use("/interview", validarUsuario, interview);
+app.use("/lenguajes", validarUsuario, lenguajes);
+app.use("/logs", validarUsuario, logs);
+app.use("/monedas", validarUsuario, monedas);
+app.use("/nivelCarrera", validarUsuario, nivelCarrera);
+app.use("/nombres", validarUsuario, nombres);
+app.use("/notificacion", validarUsuario, notificacion);
+app.use("/publicaciontrabajo", validarUsuario, publicacionTrabajo);
+app.use("/referencias", validarUsuario, referencias);
+app.use("/solicitudTrabajo", validarUsuario, solicitudTrabajo);
+app.use("/telefonos", validarUsuario, telefonos);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });
@@ -92,7 +92,7 @@ app.get("/favicon.ico", function (req, res) {
 //Funccion para validar el usuario
 function validarUsuario(req, res, next) {
   jwt.verify(
-    req.headers["x-access-token"],
+    req.headers["token"],
     req.app.get("secretKey"),
     function (err, decodedToken) {
       if (err) {

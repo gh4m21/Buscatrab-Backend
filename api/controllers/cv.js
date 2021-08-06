@@ -33,7 +33,7 @@ module.exports = {
       } else {
         for (let cv of CV) {
           listaCV.push({
-            id: cv._id,
+            _id: cv._id,
             titulo: cv.titulo,
             url: cv.url,
             tipoFichero: cv.tipoFichero,

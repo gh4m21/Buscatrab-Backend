@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloExperiencia = require("../models/experiencias");
+const modeloDesempleo = require("../models/desempleos");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -33,11 +34,11 @@ module.exports = {
       } else {
         for (let experiencia of experiencias) {
           listaExperiencia.push({
-            id: experiencia._id,
-            titulo: experiencia.titulo,
+            _id: experiencia._id,
             fechaInicio: experiencia.fechaInicio,
             fechaFinal: experiencia.fechaFinal,
             empresa: experiencia.empresa,
+            puesto: experiencia.puesto,
             descripcion: experiencia.descripcion,
             isTrabajoActivo: experiencia.isTrabajoActivo,
             fechaCreacion: experiencia.fechaCreacion,
@@ -60,10 +61,10 @@ module.exports = {
     modeloExperiencia.findByIdAndUpdate(
       req.params.id,
       {
-        titulo: req.body.titulo,
         fechaInicio: req.body.fechaInicio,
         fechaFinal: req.body.fechaFinal,
         empresa: req.body.empresa,
+        puesto: req.body.puesto,
         descripcion: req.body.descripcion,
         isTrabajoActivo: req.body.isTrabajoActivo,
         fechaModificacion: Date.now(),
@@ -89,11 +90,24 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Experiencia borrado con exito",
-            data: null,
-          });
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $pull: { _experiencia: req.params.id },
+            },
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Experiencia borrado con exito",
+                  data: null,
+                });
+              }
+            }
+          );
         }
       }
     );
@@ -102,11 +116,11 @@ module.exports = {
   create: function (req, res, next) {
     modeloExperiencia.create(
       {
-        titulo: req.body.titulo,
         fechaInicio: req.body.fechaInicio,
         fechaFinal: req.body.fechaFinal,
         empresa: req.body.empresa,
         descripcion: req.body.descripcion,
+        puesto: experiencia.puesto,
         isTrabajoActivo: req.body.isTrabajoActivo,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
@@ -115,13 +129,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Experiencia creado con exito",
-            data: {
-              experiencia: result,
+          //Actualizar desempleo
+          modeloDesempleo.findByIdAndUpdate(
+            req.body.idDesempleo,
+            {
+              $push: { _experiencia: result._id },
             },
-          });
+            function (err, desempleoInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Experiencia creado con exito",
+                  data: {
+                    experiencia: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

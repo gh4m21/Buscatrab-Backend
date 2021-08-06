@@ -36,9 +36,10 @@ module.exports = {
       } else {
         for (let notificacion of notificaciones) {
           listaNotificacion.push({
-            id: notificacion._id,
+            _id: notificacion._id,
             _solicitudTrabajo: notificacion._solicitudTrabajo,
-            _usuario: notificacion._usuario,
+            _desempleo: notificacion._desempleo,
+            _empresa: notificacion._empresa,
             accion: notificacion.accion,
             descripcion: notificacion.descripcion,
             fechaCreacion: notificacion.fechaCreacion,
@@ -62,7 +63,8 @@ module.exports = {
       req.params.id,
       {
         _solicitudTrabajo: req.body._solicitudTrabajo,
-        _usuario: req.body._usuario,
+        _desempleo: req.body._desempleo,
+        _empresa: req.body._empresa,
         accion: req.body.accion,
         descripcion: req.body.descripcion,
         fechaModificacion: Date.now(),
@@ -102,7 +104,8 @@ module.exports = {
     modeloNotificacion.create(
       {
         _solicitudTrabajo: req.body._solicitudTrabajo,
-        _usuario: req.body._usuario,
+        _desempleo: req.body._desempleo,
+        _empresa: req.body._empresa,
         accion: req.body.accion,
         descripcion: req.body.descripcion,
         fechaCreacion: Date.now(),

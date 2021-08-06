@@ -21,6 +21,7 @@ const schemaTelefonos = new Schema({
     type: String,
     trim: true,
     required: true,
+    unique: true,
   },
   fechaCreacion: {
     type: Date,

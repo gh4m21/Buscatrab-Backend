@@ -35,7 +35,7 @@ module.exports = {
       } else {
         for (let categoriaEmpresa of categoriaEmpresas) {
           listaCategoriaEmpresa.push({
-            id: categoriaEmpresa._id,
+            _id: categoriaEmpresa._id,
             descripcion: categoriaEmpresa.descripcion,
             fechaCreacion: categoriaEmpresa.fechaCreacion,
             fechaModificacion: categoriaEmpresa.fechaModificacion,

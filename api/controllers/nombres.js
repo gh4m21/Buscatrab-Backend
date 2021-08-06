@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloNombre = require("../models/nombres");
+const modeloUsuario = require("../models/usuarios");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -33,7 +34,7 @@ module.exports = {
       } else {
         for (let nombre of nombres) {
           listaNombre.push({
-            id: nombre._id,
+            _id: nombre._id,
             nombre: nombre.nombre,
             apellidoPadre: nombre.apellidoPadre,
             apellidoMadre: nombre.apellidoMadre,
@@ -69,7 +70,7 @@ module.exports = {
           res.json({
             status: 200,
             message: "Nombre actualizado con exito",
-            data: null,
+            nombre: nombreInfo,
           });
         }
       }
@@ -81,11 +82,24 @@ module.exports = {
       if (err) {
         next(err);
       } else {
-        res.json({
-          status: 200,
-          message: "Nombre borrado con exito",
-          data: null,
-        });
+        //Actualizar usuarios
+        modeloUsuario.findByIdAndUpdate(
+          req.body.idUsuario,
+          {
+            _nombre: result._id,
+          },
+          function (err, usuarioInfo) {
+            if (err) {
+              next(err);
+            } else {
+              res.json({
+                status: 200,
+                message: "Nombre borrado con exito",
+                nombre: null,
+              });
+            }
+          }
+        );
       }
     });
   },
@@ -103,13 +117,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Nombre creado con exito",
-            data: {
-              nombres: result,
+          //Actualizar usuarios
+          modeloUsuario.findByIdAndUpdate(
+            req.body.idUsuario,
+            {
+              _nombre: result._id,
             },
-          });
+            function (err, usuarioInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Nombre creado con exito",
+                  data: {
+                    nombre: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

@@ -16,9 +16,15 @@ const schemaNotificacion = new Schema({
     trim: true,
     required: true,
   },
-  _usuario: {
+  _desempleo: {
     type: Schema.Types.ObjectId,
-    ref: "usuario",
+    ref: "Desempleos",
+    trim: true,
+    required: true,
+  },
+  _empresa: {
+    type: Schema.Types.ObjectId,
+    ref: "Empresas",
     trim: true,
     required: true,
   },
