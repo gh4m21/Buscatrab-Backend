@@ -108,7 +108,7 @@ module.exports = {
         } else {
           //Actualizar Usuarios
           modeloUsuario.findByIdAndUpdate(
-            req.body.idUsuario,
+            req.body._usuario,
             {
               _empresa: result._id,
             },

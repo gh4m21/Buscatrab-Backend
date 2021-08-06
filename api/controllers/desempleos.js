@@ -67,11 +67,7 @@ module.exports = {
         lugarDeNacimiento: req.body.lugarDeNacimiento,
         estadoMatrimonial: req.body.estadoMatrimonial,
         profesion: req.body.profesion,
-        _experiencia: req.body._experiencia,
-        _formacion: req.body._formacion,
-        _lenguaje: req.body._lenguaje,
-        _solicitudTrabajo: req.body._solicitudTrabajo,
-        _referencias: req.body._referencias,
+        //_solicitudTrabajo: req.body._solicitudTrabajo,
         fechaModificacion: Date.now(),
       },
       function (err, desempleoInfo) {
@@ -127,7 +123,7 @@ module.exports = {
         } else {
           //Actualizar usuarios
           modeloUsuario.findByIdAndUpdate(
-            req.body.idUsuario,
+            req.body._usuario,
             {
               _desempleo: result._id,
             },
