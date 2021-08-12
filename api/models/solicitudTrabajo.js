@@ -26,7 +26,6 @@ const schemaSolictudTrabajo = new Schema({
     type: Schema.Types.ObjectId,
     ref: "CV",
     trim: true,
-    required: true,
   },
   _interview: {
     type: Schema.Types.ObjectId,
@@ -36,6 +35,7 @@ const schemaSolictudTrabajo = new Schema({
   motivacion: {
     type: String,
     trim: true,
+    required: true,
   },
   isAceptado: {
     type: Boolean,

@@ -38,7 +38,7 @@ module.exports = {
             _usuario: empresa._usuario,
             fechaFundacion: empresa.fechaFundacion,
             _categoriaEmpresa: empresa._categoriaEmpresa,
-            publicacionTrabajo: empresa.publicacionTrabajo,
+            _publicacionTrabajo: empresa._publicacionTrabajo,
             fechaCreacion: empresa.fechaCreacion,
             fechaModificacion: empresa.fechaModificacion,
           });
@@ -61,7 +61,7 @@ module.exports = {
       {
         fechaFundacion: req.body.fechaFundacion,
         _categoriaEmpresa: req.body._categoriaEmpresa,
-        publicacionTrabajo: req.body.publicacionTrabajo,
+        _publicacionTrabajo: [],
         fechaModificacion: Date.now(),
       },
       function (err, empresaInfo) {
@@ -98,7 +98,7 @@ module.exports = {
         _usuario: req.body._usuario,
         fechaFundacion: req.body.fechaFundacion,
         _categoriaEmpresa: req.body._categoriaEmpresa,
-        publicacionTrabajo: null,
+        _publicacionTrabajo: [],
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

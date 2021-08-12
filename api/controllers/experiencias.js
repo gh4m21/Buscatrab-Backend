@@ -35,7 +35,7 @@ module.exports = {
         for (let experiencia of experiencias) {
           listaExperiencia.push({
             _id: experiencia._id,
-            fechaInicio: experiencia.fechaInicio,
+            fechaInicial: experiencia.fechaInicial,
             fechaFinal: experiencia.fechaFinal,
             empresa: experiencia.empresa,
             puesto: experiencia.puesto,
@@ -61,7 +61,7 @@ module.exports = {
     modeloExperiencia.findByIdAndUpdate(
       req.params.id,
       {
-        fechaInicio: req.body.fechaInicio,
+        fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
         empresa: req.body.empresa,
         puesto: req.body.puesto,
@@ -116,11 +116,11 @@ module.exports = {
   create: function (req, res, next) {
     modeloExperiencia.create(
       {
-        fechaInicio: req.body.fechaInicio,
+        fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
         empresa: req.body.empresa,
         descripcion: req.body.descripcion,
-        puesto: experiencia.puesto,
+        puesto: req.body.puesto,
         isTrabajoActivo: req.body.isTrabajoActivo,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),

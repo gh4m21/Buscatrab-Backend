@@ -24,6 +24,7 @@ const publicacionTrabajo = require("./routes/publicacionTrabajo");
 const referencias = require("./routes/referencias");
 const solicitudTrabajo = require("./routes/solicitudTrabajo");
 const telefonos = require("./routes/telefonos");
+const profile = require("./routes/profile");
 const usuarios = require("./routes/usuarios");
 const bodyparser = require("body-parser");
 const mongoose = require("./config/basedatos"); // configuracion de base de datos
@@ -85,6 +86,7 @@ app.use("/publicaciontrabajo", validarUsuario, publicacionTrabajo);
 app.use("/referencias", validarUsuario, referencias);
 app.use("/solicitudTrabajo", validarUsuario, solicitudTrabajo);
 app.use("/telefonos", validarUsuario, telefonos);
+app.use("/profile", validarUsuario, profile);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });

@@ -36,7 +36,7 @@ module.exports = {
       } else {
         for (let categoria of categoriaTrabajo) {
           listaCategoriaTrabajo.push({
-            id: categoria._id,
+            _id: categoria._id,
             descripcion: categoria.descripcion,
             fechaCreacion: categoria.fechaCreacion,
             fechaModificacion: categoria.fechaModificacion,

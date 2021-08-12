@@ -24,13 +24,11 @@ const schemaPublicacionTrabajo = new Schema({
   posicion: {
     type: String,
     trim: true,
-    required: true,
   },
   _categoriaTrabajo: {
     type: Schema.Types.ObjectId,
     ref: "categoriaTrabajo",
     trim: true,
-    required: true,
   },
   descripcion: {
     type: String,
@@ -40,7 +38,6 @@ const schemaPublicacionTrabajo = new Schema({
   tipoContrato: {
     type: String,
     trim: true,
-    required: true,
   },
   responsabilidad: {
     type: String,
@@ -54,7 +51,6 @@ const schemaPublicacionTrabajo = new Schema({
     type: Schema.Types.ObjectId,
     ref: "nivelCarrera",
     trim: true,
-    required: true,
   },
   experienciaTrabajo: {
     type: String,
@@ -63,7 +59,6 @@ const schemaPublicacionTrabajo = new Schema({
   lenguaje: {
     type: String,
     trim: true,
-    required: true,
   },
   salario: {
     type: String,
@@ -78,10 +73,6 @@ const schemaPublicacionTrabajo = new Schema({
     type: String,
     trim: true,
   },
-  cantidadTiempo: {
-    type: String,
-    trim: true,
-  },
   cantidadPersonas: {
     type: String,
     trim: true,
@@ -90,15 +81,13 @@ const schemaPublicacionTrabajo = new Schema({
     type: Boolean,
     trim: true,
   },
-  fechaInicio: {
+  fechaInicial: {
     type: Date,
     trim: true,
-    required: true,
   },
   fechaFinal: {
     type: Date,
     trim: true,
-    required: true,
   },
   fechaCreacion: {
     type: Date,

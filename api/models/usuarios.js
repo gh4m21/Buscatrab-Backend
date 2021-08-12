@@ -21,6 +21,11 @@ const schemaUsuario = new Schema({
     ref: "Nombres",
     trim: true,
   },
+  _identificacion: {
+    type: Schema.Types.ObjectId,
+    ref: "Identificacion",
+    trim: true,
+  },
   email: {
     type: String,
     trim: true,

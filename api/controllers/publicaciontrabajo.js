@@ -4,7 +4,14 @@
  */
 
 //Dependencies
-const modeloPublicacionTrabajo = require("../models/publicaciontrabajo");
+const modeloPublicacionTrabajo = require("../models/publicacionTrabajo");
+const modeloEmpresa = require("../models/empresas");
+const modeloCategoriaTrabajo = require("../models/categoriaTrabajo");
+const modeloNivelCarrera = require("../models/nivelCarrera");
+const modeloMoneda = require("../models/monedas");
+const modeloUsuario = require("../models/usuarios");
+const modeloNombre = require("../models/nombres");
+const modeloTelefono = require("../models/telefonos");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -15,13 +22,137 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Publicacion Trabajo encontrado",
-            data: {
-              publicacionTrabajo: publicacionTrabajoInfo,
-            },
-          });
+          modeloEmpresa.findById(
+            publicacionTrabajoInfo._empresa,
+            function (err, empresaInfo) {
+              if (err) {
+                next(err);
+              } else {
+                modeloCategoriaTrabajo.findById(
+                  publicacionTrabajoInfo._categoriaTrabajo,
+                  function (err, categoriaTrabajoInfo) {
+                    if (err) {
+                      next(err);
+                    } else {
+                      modeloNivelCarrera.findById(
+                        publicacionTrabajoInfo._nivelCarrera,
+                        function (err, nivelCarreraInfo) {
+                          if (err) {
+                            next(err);
+                          } else {
+                            modeloMoneda.findById(
+                              publicacionTrabajoInfo._moneda,
+                              function (err, monedaInfo) {
+                                if (err) {
+                                  next(err);
+                                } else {
+                                  modeloUsuario.findById(
+                                    empresaInfo._usuario,
+                                    function (err, usuarioInfo) {
+                                      if (err) {
+                                        next(err);
+                                      } else {
+                                        modeloNombre.findById(
+                                          usuarioInfo._nombre,
+                                          function (err, nombreInfo) {
+                                            if (err) {
+                                              next(err);
+                                            } else {
+                                              modeloTelefono.findById(
+                                                usuarioInfo._telefono,
+                                                function (err, telefonoInfo) {
+                                                  if (err) {
+                                                    next(err);
+                                                  } else {
+                                                    let publicacionTrabajoObj;
+                                                    publicacionTrabajoObj = {
+                                                      _id: publicacionTrabajoInfo._id,
+                                                      titulo:
+                                                        publicacionTrabajoInfo.titulo,
+                                                      _empresa: {
+                                                        _id: empresaInfo._id,
+                                                        usuarioInfo,
+                                                        fechaFundacion:
+                                                          empresaInfo.fechaFundacion,
+                                                        _categoriaEmpresa:
+                                                          empresaInfo._categoriaEmpresa,
+                                                        telefonoInfo,
+                                                        nombreInfo,
+                                                      },
+                                                      posicion:
+                                                        publicacionTrabajoInfo.posicion,
+                                                      _categoriaTrabajo: {
+                                                        _id: categoriaTrabajoInfo._id,
+                                                        descripcion:
+                                                          categoriaTrabajoInfo.descripcion,
+                                                      },
+                                                      descripcion:
+                                                        publicacionTrabajoInfo.descripcion,
+                                                      tipoContrato:
+                                                        publicacionTrabajoInfo.tipoContrato,
+                                                      responsabilidad:
+                                                        publicacionTrabajoInfo.responsabilidad,
+                                                      requerimientos:
+                                                        publicacionTrabajoInfo.requerimientos,
+                                                      _nivelCarrera: {
+                                                        _id: nivelCarreraInfo._id,
+                                                        descripcion:
+                                                          nivelCarreraInfo.descripcion,
+                                                      },
+                                                      experienciaTrabajo:
+                                                        publicacionTrabajoInfo.experienciaTrabajo,
+                                                      lenguaje:
+                                                        publicacionTrabajoInfo.lenguaje,
+                                                      salario:
+                                                        publicacionTrabajoInfo.salario,
+                                                      _moneda: {
+                                                        _id: monedaInfo._id,
+                                                        descripcion:
+                                                          monedaInfo.descripcion,
+                                                      },
+                                                      periodoSalarial:
+                                                        publicacionTrabajoInfo.periodoSalarial,
+                                                      cantidadPersonas:
+                                                        publicacionTrabajoInfo.cantidadPersonas,
+                                                      isActivado:
+                                                        publicacionTrabajoInfo.isActivado,
+                                                      fechaInicial:
+                                                        publicacionTrabajoInfo.fechaInicial,
+                                                      fechaFinal:
+                                                        publicacionTrabajoInfo.fechaFinal,
+                                                      fechaCreacion:
+                                                        publicacionTrabajoInfo.fechaCreacion,
+                                                    };
+                                                    res.json({
+                                                      status: 200,
+                                                      message:
+                                                        "Publicacion Trabajo encontrado",
+                                                      data: {
+                                                        publicacionTrabajo:
+                                                          publicacionTrabajoObj,
+                                                      },
+                                                    });
+                                                  }
+                                                }
+                                              );
+                                            }
+                                          }
+                                        );
+                                      }
+                                    }
+                                  );
+                                }
+                              }
+                            );
+                          }
+                        }
+                      );
+                    }
+                  }
+                );
+              }
+            }
+          );
         }
       }
     );
@@ -51,10 +182,9 @@ module.exports = {
             salario: publicacion.salario,
             _moneda: publicacion._moneda,
             periodoSalarial: publicacion.periodoSalarial,
-            cantidadTiempo: publicacion.cantidadTiempo,
             cantidadPersonas: publicacion.cantidadPersonas,
             isActivado: publicacion.isActivado,
-            fechaInicio: publicacion.fechaInicio,
+            fechaInicial: publicacion.fechaInicial,
             fechaFinal: publicacion.fechaFinal,
             fechaCreacion: publicacion.fechaCreacion,
             fechaModificacion: publicacion.fechaModificacion,
@@ -90,10 +220,9 @@ module.exports = {
         salario: req.body.salario,
         _moneda: req.body._moneda,
         periodoSalarial: req.body.periodoSalarial,
-        cantidadTiempo: req.body.cantidadTiempo,
         cantidadPersonas: req.body.cantidadPersonas,
         isActivado: req.body.isActivado,
-        fechaInicio: req.body.fechaInicio,
+        fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
         fechaModificacion: Date.now(),
       },
@@ -118,11 +247,23 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Publicacion Trabajo borrado con exito",
-            data: null,
-          });
+          modeloEmpresa.findByIdAndUpdate(
+            req.body.idEmpresa,
+            {
+              $pull: { _empresa: req.params.id },
+            },
+            function (err, empresaInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "PublicacionTrabajo borrado con exito",
+                  data: null,
+                });
+              }
+            }
+          );
         }
       }
     );
@@ -145,10 +286,9 @@ module.exports = {
         salario: req.body.salario,
         _moneda: req.body._moneda,
         periodoSalarial: req.body.periodoSalarial,
-        cantidadTiempo: req.body.cantidadTiempo,
         cantidadPersonas: req.body.cantidadPersonas,
         isActivado: true,
-        fechaInicio: req.body.fechaInicio,
+        fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
@@ -157,13 +297,26 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Publicacion Trabajo creado con exito",
-            data: {
-              publicacionTrabajo: result,
+          //Actualizar desempleo
+          modeloEmpresa.findByIdAndUpdate(
+            req.body._empresa,
+            {
+              $push: { _publicacionTrabajo: result._id },
             },
-          });
+            function (err, empresaInfo) {
+              if (err) {
+                next(err);
+              } else {
+                res.json({
+                  status: 200,
+                  message: "Publicacion creado con exito",
+                  data: {
+                    publicacionTrabajo: result,
+                  },
+                });
+              }
+            }
+          );
         }
       }
     );

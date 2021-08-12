@@ -34,13 +34,12 @@ module.exports = {
       } else {
         for (let direccion of direcciones) {
           listaDireccion.push({
-            id: direccion._id,
+            _id: direccion._id,
             pais: direccion.pais,
             region: direccion.region,
             ciudad: direccion.ciudad,
-            sector: direccion.sector,
             calle: direccion.calle,
-            referencia: direccion.referencia,
+            codigoPostal: direccion.codigoPostal,
             fechaCreacion: direccion.fechaCreacion,
             fechaModificacion: direccion.fechaModificacion,
           });
@@ -64,9 +63,8 @@ module.exports = {
         pais: req.body.pais,
         region: req.body.region,
         ciudad: req.body.ciudad,
-        sector: req.body.sector,
         calle: req.body.calle,
-        referencia: req.body.referencia,
+        codigoPostal: req.body.codigoPostal,
         fechaModificacion: Date.now(),
       },
       function (err, direccionInfo) {
@@ -106,9 +104,8 @@ module.exports = {
         pais: req.body.pais,
         region: req.body.region,
         ciudad: req.body.ciudad,
-        sector: req.body.sector,
         calle: req.body.calle,
-        referencia: req.body.referencia,
+        codigoPostal: req.body.codigoPostal,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

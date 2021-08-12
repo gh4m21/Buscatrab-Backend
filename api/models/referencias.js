@@ -19,23 +19,18 @@ const schemaReferencias = new Schema({
     type: String,
     trim: true,
     required: true,
-    unique: true,
   },
   email: {
     type: String,
     trim: true,
-    required: true,
-    unique: true,
   },
   empresa: {
     type: String,
     trim: true,
-    required: true,
   },
   notas: {
     type: String,
     trim: true,
-    required: true,
   },
   fechaCreacion: {
     type: Date,

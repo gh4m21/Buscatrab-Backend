@@ -18,7 +18,6 @@ const schemaFormacion = new Schema({
   carrera: {
     type: String,
     trim: true,
-    required: true,
   },
   nivel: {
     type: String,
@@ -33,10 +32,9 @@ const schemaFormacion = new Schema({
   fechaFinal: {
     type: Date,
     trim: true,
-    required: true,
   },
   descripcion: {
-    type: Date,
+    type: String,
     trim: true,
   },
   fechaCreacion: {

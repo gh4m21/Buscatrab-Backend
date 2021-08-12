@@ -24,7 +24,7 @@ const schemaEmpresas = new Schema({
     ref: "CategoriaEmpresas",
     trim: true,
   },
-  publicacionTrabajo: [
+  _publicacionTrabajo: [
     {
       type: Schema.Types.ObjectId,
       ref: "PublicacionTrabajos",

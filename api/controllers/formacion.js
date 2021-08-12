@@ -123,7 +123,6 @@ module.exports = {
         fechaInicial: req.body.fechaInicial,
         fechaFinal: req.body.fechaFinal,
         descripcion: req.body.descripcion,
-        isTrabajoActivo: req.body.isTrabajoActivo,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

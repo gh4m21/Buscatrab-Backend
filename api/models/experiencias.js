@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const schemaExperiencia = new Schema({
-  fechaInicio: {
+  fechaInicial: {
     type: Date,
     trim: true,
     required: true,
@@ -18,6 +18,7 @@ const schemaExperiencia = new Schema({
   fechaFinal: {
     type: Date,
     trim: true,
+    required: true,
   },
   empresa: {
     type: String,
@@ -27,6 +28,7 @@ const schemaExperiencia = new Schema({
   puesto: {
     type: String,
     trim: true,
+    required: true,
   },
   descripcion: {
     type: String,
