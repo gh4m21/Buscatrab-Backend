@@ -13,7 +13,6 @@ const schemaCV = new Schema({
   titulo: {
     type: String,
     trim: true,
-    required: true,
   },
   url: {
     type: String,

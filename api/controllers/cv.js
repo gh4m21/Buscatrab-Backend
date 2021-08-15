@@ -91,10 +91,12 @@ module.exports = {
   },
 
   create: function (req, res, next) {
+    const url = req.protocol + "://" + req.get("host");
     modeloCV.create(
       {
-        titulo: req.body.titulo,
-        url: req.body.url,
+        titulo: req.file.filename,
+        url: url + "/data/" + req.file.filename,
+        tipoFichero: req.file.mimetype,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),
       },

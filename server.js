@@ -31,6 +31,35 @@ const mongoose = require("./config/basedatos"); // configuracion de base de dato
 let jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
+const multer = require("multer");
+const { v4: uuid } = require("uuid");
+
+//To upload documents and fotos
+const DIR = "data/";
+const storage = multer.diskStorage({
+  destination: DIR,
+  filename: (req, file, cb) => {
+    const filename = file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, uuid() + "-" + filename);
+  },
+});
+
+let upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "application/pdf"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Solo .png, .jpg, .jpeg and .pdf es aceptado"));
+    }
+  },
+});
 
 //Activar cors para manejar solicitud de diferentes fuentes
 app.use(cors());
@@ -52,6 +81,9 @@ app.use(
   })
 );
 
+//for file upload
+app.use("/data/", express.static("data"));
+
 app.get("/", function (req, res) {
   res.json({
     "Api:": "Test servidor para el proyecto de Buscatrab",
@@ -68,7 +100,7 @@ app.use("/usuarios", usuarios);
 //validarUsuario agregarla en la mitad
 app.use("/categoriaEmpresas", validarUsuario, categoriaEmpresas);
 app.use("/categoriaTrabajo", validarUsuario, categoriaTrabajo);
-app.use("/cv", validarUsuario, cv);
+app.use("/cv", validarUsuario, upload.single("file"), cv);
 app.use("/desempleos", validarUsuario, desempleos);
 app.use("/direccion", validarUsuario, direccion);
 app.use("/empresas", validarUsuario, empresas);
