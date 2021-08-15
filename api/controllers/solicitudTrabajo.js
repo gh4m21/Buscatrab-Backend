@@ -30,34 +30,39 @@ module.exports = {
   getAll: function (req, res, next) {
     let listaSolicitudTrabajo = [];
 
-    modeloSolicitudTrabajo.find({}, function (err, solicitudTrabajo) {
-      if (err) {
-        next(err);
-      } else {
-        for (let solicitud of solicitudTrabajo) {
-          listaSolicitudTrabajo.push({
-            _id: solicitud._id,
-            _publicacionTrabajo: solicitud._publicacionTrabajo,
-            _desempleo: solicitud._desempleo,
-            _cv: solicitud._cv,
-            _interview: solicitud._interview,
-            motivacion: solicitud.motivacion,
-            isAceptado: solicitud.isAceptado,
-            isActivo: solicitud.isActivo,
-            fechaCreacion: solicitud.fechaCreacion,
-            fechaModificacion: solicitud.fechaModificacion,
+    modeloSolicitudTrabajo.find(
+      {
+        _publicacionTrabajo: req.params.id,
+      },
+      function (err, solicitudTrabajo) {
+        if (err) {
+          next(err);
+        } else {
+          for (let solicitud of solicitudTrabajo) {
+            listaSolicitudTrabajo.push({
+              _id: solicitud._id,
+              _publicacionTrabajo: solicitud._publicacionTrabajo,
+              _desempleo: solicitud._desempleo,
+              _cv: solicitud._cv,
+              _interview: solicitud._interview,
+              motivacion: solicitud.motivacion,
+              isAceptado: solicitud.isAceptado,
+              isActivo: solicitud.isActivo,
+              fechaCreacion: solicitud.fechaCreacion,
+              fechaModificacion: solicitud.fechaModificacion,
+            });
+          }
+
+          res.json({
+            status: 200,
+            message: "Lista de solicitud encontrado",
+            data: {
+              solictudTrabajo: listaSolicitudTrabajo,
+            },
           });
         }
-
-        res.json({
-          status: 200,
-          message: "Lista de solicitud encontrado",
-          data: {
-            solictudTrabajo: listaSolicitudTrabajo,
-          },
-        });
       }
-    });
+    );
   },
 
   updateById: function (req, res, next) {
@@ -110,9 +115,9 @@ module.exports = {
         _publicacionTrabajo: req.body._publicacionTrabajo,
         _desempleo: req.body._desempleo,
         _cv: req.body._cv,
-        _interview: req.body._interview,
+        _interview: null,
         motivacion: req.body.motivacion,
-        isAceptado: req.body.isAceptado,
+        isAceptado: false,
         isActivo: true,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),

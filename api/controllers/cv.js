@@ -8,20 +8,25 @@ const modeloCV = require("../models/cv");
 
 module.exports = {
   getById: function (req, res, next) {
-    console.log(req.body);
-    modeloCV.findById(req.params.id, function (err, cvInfo) {
-      if (err) {
-        next(err);
-      } else {
-        res.json({
-          status: 200,
-          message: "CV encontrado",
-          data: {
-            CV: cvInfo,
-          },
-        });
+    console.log(req.params.id);
+    modeloCV.find(
+      {
+        idUsuario: req.params.id,
+      },
+      function (err, cvInfo) {
+        if (err) {
+          next(err);
+        } else {
+          res.json({
+            status: 200,
+            message: "CV encontrado",
+            data: {
+              CV: cvInfo,
+            },
+          });
+        }
       }
-    });
+    );
   },
 
   getAll: function (req, res, next) {
@@ -94,6 +99,7 @@ module.exports = {
     const url = req.protocol + "://" + req.get("host");
     modeloCV.create(
       {
+        idUsuario: req.body.idUsuario,
         titulo: req.file.filename,
         url: url + "/data/" + req.file.filename,
         tipoFichero: req.file.mimetype,

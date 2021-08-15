@@ -10,6 +10,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const schemaCV = new Schema({
+  idUsuario: {
+    type: String,
+    trim: true,
+  },
   titulo: {
     type: String,
     trim: true,
