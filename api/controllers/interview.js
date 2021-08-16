@@ -5,6 +5,7 @@
 
 //Dependencies
 const modeloInterview = require("../models/interview");
+const modeloSolicitud = require("../models/solicitudTrabajo");
 
 module.exports = {
   getById: function (req, res, next) {
@@ -118,9 +119,10 @@ module.exports = {
           //Actualiza solicitud de Trabajo
           if (!err && result) {
             modeloSolicitud.findByIdAndUpdate(
-              req.body.solicitudTrabajo,
+              req.body.idSolicitudTrabajo,
               {
                 _interview: result._id,
+                isAceptado: true,
               },
               function (err, solicitudTrabajoInfo) {
                 if (!err && solicitudTrabajoInfo) {
