@@ -15,7 +15,6 @@ const modeloTelefono = require("../models/telefonos");
 
 module.exports = {
   getById: function (req, res, next) {
-    console.log(req.body);
     modeloPublicacionTrabajo.findById(
       req.params.id,
       function (err, publicacionTrabajoInfo) {

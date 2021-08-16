@@ -115,13 +115,30 @@ module.exports = {
         if (err) {
           next(err);
         } else {
-          res.json({
-            status: 200,
-            message: "Interview creado con exito",
-            data: {
-              interview: result,
-            },
-          });
+          //Actualiza solicitud de Trabajo
+          if (!err && result) {
+            modeloSolicitud.findByIdAndUpdate(
+              req.body.solicitudTrabajo,
+              {
+                _interview: result._id,
+              },
+              function (err, solicitudTrabajoInfo) {
+                if (!err && solicitudTrabajoInfo) {
+                  res.json({
+                    status: 200,
+                    message: "Interview creado con exito",
+                    data: {
+                      interview: result,
+                    },
+                  });
+                } else {
+                  next(err);
+                }
+              }
+            );
+          } else {
+            next(err);
+          }
         }
       }
     );

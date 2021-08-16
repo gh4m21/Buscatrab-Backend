@@ -8,6 +8,6 @@ const express = require("express");
 const router = express.Router();
 const solicitudController = require("../api/controllers/customSolicitudTrabajo");
 
-router.get("/", solicitudController.getCustomSolicitud);
+router.get("/:id", solicitudController.getCustomSolicitud);
 
 module.exports = router;
