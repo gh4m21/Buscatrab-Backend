@@ -40,6 +40,7 @@ const schemaSolictudTrabajo = new Schema({
   isAceptado: {
     type: Boolean,
     trim: true,
+    default: null,
   },
   isActivo: {
     type: Boolean,

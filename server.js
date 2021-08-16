@@ -26,6 +26,7 @@ const solicitudTrabajo = require("./routes/solicitudTrabajo");
 const telefonos = require("./routes/telefonos");
 const profile = require("./routes/profile");
 const usuarios = require("./routes/usuarios");
+const customSolicitudTrabajo = require("./routes/customSolicitudTrabajo");
 const bodyparser = require("body-parser");
 const mongoose = require("./config/basedatos"); // configuracion de base de datos
 let jwt = require("jsonwebtoken");
@@ -119,6 +120,7 @@ app.use("/referencias", validarUsuario, referencias);
 app.use("/solicitudTrabajo", validarUsuario, solicitudTrabajo);
 app.use("/telefonos", validarUsuario, telefonos);
 app.use("/profile", validarUsuario, profile);
+app.use("/customSolicitudTrabajo", validarUsuario, customSolicitudTrabajo);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });

@@ -92,7 +92,7 @@ module.exports = {
           modeloDesempleo.findByIdAndUpdate(
             req.body.idDesempleo,
             {
-              $pull: { _referencia: req.params.id },
+              $pull: { _referencias: req.params.id },
             },
             function (err, desempleoInfo) {
               if (err) {

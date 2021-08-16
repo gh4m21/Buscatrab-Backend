@@ -27,6 +27,27 @@ module.exports = {
     );
   },
 
+  getByUsuarioAndPublicacion: function (req, res, next) {
+    modeloSolicitudTrabajo
+      .find({
+        _desempleo: req.body.idUsuario,
+        _publicacionTrabajo: req.body.idPublicacionTrabajo,
+      })
+      .exec(function (err, solicitudTrabajoInfo) {
+        if (err) {
+          next(err);
+        } else {
+          res.json({
+            status: 200,
+            message: "Solicitud Trabajo encontrado",
+            data: {
+              solicitudTrabajo: solicitudTrabajoInfo,
+            },
+          });
+        }
+      });
+  },
+
   getAll: function (req, res, next) {
     let listaSolicitudTrabajo = [];
 
@@ -57,7 +78,7 @@ module.exports = {
             status: 200,
             message: "Lista de solicitud encontrado",
             data: {
-              solictudTrabajo: listaSolicitudTrabajo,
+              solicitudTrabajo: listaSolicitudTrabajo,
             },
           });
         }
@@ -75,7 +96,7 @@ module.exports = {
         _interview: req.body._interview,
         motivacion: req.body.motivacion,
         isAceptado: req.body.isAceptado,
-        isActivo: req.body.isActivo,
+        isActivo: true,
         fechaModificacion: Date.now(),
       },
       function (err, solicitudTrabajoInfo) {
@@ -117,7 +138,7 @@ module.exports = {
         _cv: req.body._cv,
         _interview: null,
         motivacion: req.body.motivacion,
-        isAceptado: false,
+        isAceptado: null,
         isActivo: true,
         fechaCreacion: Date.now(),
         fechaModificacion: Date.now(),

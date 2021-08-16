@@ -6,12 +6,16 @@
 //Dependencies
 const express = require("express");
 const router = express.Router();
-const solictudTrabajoController = require("../api/controllers/solicitudTrabajo");
+const solicitudTrabajoController = require("../api/controllers/solicitudTrabajo");
 
-router.get("/", solictudTrabajoController.getAll);
-router.post("/", solictudTrabajoController.create);
-router.get("/:id", solictudTrabajoController.getById);
-router.put("/:id", solictudTrabajoController.updateById);
-router.delete("/:id", solictudTrabajoController.deleteById);
+router.get("/", solicitudTrabajoController.getAll);
+router.post("/", solicitudTrabajoController.create);
+router.get("/:id", solicitudTrabajoController.getById);
+router.post(
+  "/ByUsuarioAndPublicacion/",
+  solicitudTrabajoController.getByUsuarioAndPublicacion
+);
+router.put("/:id", solicitudTrabajoController.updateById);
+router.delete("/:id", solicitudTrabajoController.deleteById);
 
 module.exports = router;
