@@ -160,45 +160,107 @@ module.exports = {
   getAll: function (req, res, next) {
     let listaPublicacionTrabajo = [];
 
-    modeloPublicacionTrabajo.find({}, function (err, publicacionTrabajo) {
-      if (err) {
-        next(err);
-      } else {
-        for (let publicacion of publicacionTrabajo) {
-          listaPublicacionTrabajo.push({
-            _id: publicacion._id,
-            titulo: publicacion.titulo,
-            _empresa: publicacion._empresa,
-            posicion: publicacion.posicion,
-            _categoriaTrabajo: publicacion._categoriaTrabajo,
-            descripcion: publicacion.descripcion,
-            tipoContrato: publicacion.tipoContrato,
-            responsabilidad: publicacion.responsabilidad,
-            requerimientos: publicacion.requerimientos,
-            _nivelCarrera: publicacion._nivelCarrera,
-            experienciaTrabajo: publicacion.experienciaTrabajo,
-            lenguaje: publicacion.lenguaje,
-            salario: publicacion.salario,
-            _moneda: publicacion._moneda,
-            periodoSalarial: publicacion.periodoSalarial,
-            cantidadPersonas: publicacion.cantidadPersonas,
-            isActivado: publicacion.isActivado,
-            fechaInicial: publicacion.fechaInicial,
-            fechaFinal: publicacion.fechaFinal,
-            fechaCreacion: publicacion.fechaCreacion,
-            fechaModificacion: publicacion.fechaModificacion,
+    modeloPublicacionTrabajo.find(
+      {},
+      null,
+      {
+        sort: {
+          fechaCreacion: -1,
+        },
+      },
+      function (err, publicacionTrabajo) {
+        if (err) {
+          next(err);
+        } else {
+          for (let publicacion of publicacionTrabajo) {
+            listaPublicacionTrabajo.push({
+              _id: publicacion._id,
+              titulo: publicacion.titulo,
+              _empresa: publicacion._empresa,
+              posicion: publicacion.posicion,
+              _categoriaTrabajo: publicacion._categoriaTrabajo,
+              descripcion: publicacion.descripcion,
+              tipoContrato: publicacion.tipoContrato,
+              responsabilidad: publicacion.responsabilidad,
+              requerimientos: publicacion.requerimientos,
+              _nivelCarrera: publicacion._nivelCarrera,
+              experienciaTrabajo: publicacion.experienciaTrabajo,
+              lenguaje: publicacion.lenguaje,
+              salario: publicacion.salario,
+              _moneda: publicacion._moneda,
+              periodoSalarial: publicacion.periodoSalarial,
+              cantidadPersonas: publicacion.cantidadPersonas,
+              isActivado: publicacion.isActivado,
+              fechaInicial: publicacion.fechaInicial,
+              fechaFinal: publicacion.fechaFinal,
+              fechaCreacion: publicacion.fechaCreacion,
+              fechaModificacion: publicacion.fechaModificacion,
+            });
+          }
+
+          res.json({
+            status: 200,
+            message: "Lista de Publicacion Trabajo encontrado",
+            data: {
+              publicacionTrabajo: listaPublicacionTrabajo,
+            },
           });
         }
-
-        res.json({
-          status: 200,
-          message: "Lista de Publicacion Trabajo encontrado",
-          data: {
-            publicacionTrabajo: listaPublicacionTrabajo,
-          },
-        });
       }
-    });
+    );
+  },
+
+  getAllByUser: function (req, res, next) {
+    let listaPublicacionTrabajo = [];
+
+    modeloPublicacionTrabajo.find(
+      { _empresa: req.params.id },
+      null,
+      {
+        sort: {
+          fechaCreacion: -1,
+        },
+      },
+      function (err, publicacionTrabajo) {
+        if (err) {
+          next(err);
+        } else {
+          for (let publicacion of publicacionTrabajo) {
+            listaPublicacionTrabajo.push({
+              _id: publicacion._id,
+              titulo: publicacion.titulo,
+              _empresa: publicacion._empresa,
+              posicion: publicacion.posicion,
+              _categoriaTrabajo: publicacion._categoriaTrabajo,
+              descripcion: publicacion.descripcion,
+              tipoContrato: publicacion.tipoContrato,
+              responsabilidad: publicacion.responsabilidad,
+              requerimientos: publicacion.requerimientos,
+              _nivelCarrera: publicacion._nivelCarrera,
+              experienciaTrabajo: publicacion.experienciaTrabajo,
+              lenguaje: publicacion.lenguaje,
+              salario: publicacion.salario,
+              _moneda: publicacion._moneda,
+              periodoSalarial: publicacion.periodoSalarial,
+              cantidadPersonas: publicacion.cantidadPersonas,
+              isActivado: publicacion.isActivado,
+              fechaInicial: publicacion.fechaInicial,
+              fechaFinal: publicacion.fechaFinal,
+              fechaCreacion: publicacion.fechaCreacion,
+              fechaModificacion: publicacion.fechaModificacion,
+            });
+          }
+
+          res.json({
+            status: 200,
+            message: "Lista de Publicacion Trabajo encontrado",
+            data: {
+              publicacionTrabajo: listaPublicacionTrabajo,
+            },
+          });
+        }
+      }
+    );
   },
 
   updateById: function (req, res, next) {

@@ -11,6 +11,7 @@ const userController = require("../api/controllers/usuarios");
 router.post("/registrar", userController.create);
 router.post("/authenticate", userController.authenticate);
 router.put("/edit/:id", userController.updateById);
+router.put("/editFoto/:id", userController.updateFoto);
 router.delete("/delete/:id", userController.deleteById);
 router.get("/getOne/:id", userController.getById);
 router.get("/getAll", userController.getAll);

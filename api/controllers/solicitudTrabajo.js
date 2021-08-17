@@ -55,6 +55,12 @@ module.exports = {
       {
         _publicacionTrabajo: req.params.id,
       },
+      null,
+      {
+        sort: {
+          fechaCreacion: -1,
+        },
+      },
       function (err, solicitudTrabajo) {
         if (err) {
           next(err);
@@ -85,7 +91,6 @@ module.exports = {
       }
     );
   },
-
   updateById: function (req, res, next) {
     modeloSolicitudTrabajo.findByIdAndUpdate(
       req.params.id,

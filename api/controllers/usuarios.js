@@ -13,6 +13,7 @@ module.exports = {
   create: function (req, res, next) {
     modeloUsuario.create(
       {
+        foto: null,
         _nombre: null,
         email: req.body.email,
         _identificacion: null,
@@ -76,6 +77,28 @@ module.exports = {
     );
   },
 
+  updateFoto: function (req, res, next) {
+    const url = req.protocol + "://" + req.get("host");
+    modeloUsuario.findByIdAndUpdate(
+      req.params.id,
+      {
+        foto: url + "/data/" + req.file.filename,
+        fechaModificacion: Date.now(),
+      },
+      function (err, usuarioInfo) {
+        if (err) {
+          next(err);
+        } else {
+          res.json({
+            status: 200,
+            message: "Usuario actualizado con exito",
+            usuario: usuarioInfo,
+          });
+        }
+      }
+    );
+  },
+
   deleteById: function (req, res, next) {
     modeloUsuario.findByIdAndRemove(req.params.id, function (err, usuarioInfo) {
       if (err) {
@@ -116,6 +139,7 @@ module.exports = {
         for (let usuario of usuarios) {
           listaUsuario.push({
             _id: usuario._id,
+            fot: usuario.foto,
             _nombre: usuario._nombre,
             _identificacion: usuario.identificacion,
             email: usuario.email,

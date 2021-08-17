@@ -10,23 +10,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const schemaNotificacion = new Schema({
-  _solicitudTrabajo: {
-    type: Schema.Types.ObjectId,
-    ref: "solicitudTrabajo",
+  idParametra: {
+    type: String,
     trim: true,
-    required: true,
   },
   _desempleo: {
     type: Schema.Types.ObjectId,
     ref: "Desempleos",
     trim: true,
-    required: true,
   },
   _empresa: {
     type: Schema.Types.ObjectId,
     ref: "Empresas",
     trim: true,
-    required: true,
   },
   accion: {
     type: String,
@@ -36,7 +32,6 @@ const schemaNotificacion = new Schema({
   descripcion: {
     type: String,
     trim: true,
-    required: true,
   },
   fechaCreacion: {
     type: Date,

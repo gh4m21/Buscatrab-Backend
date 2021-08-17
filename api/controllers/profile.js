@@ -126,6 +126,7 @@ module.exports = {
                                                                 } else {
                                                                   usuarioObj = {
                                                                     _id: usuarioInfo._id,
+                                                                    foto: usuarioInfo.foto,
                                                                     _nombre: {
                                                                       _id: nombreInfo._id,
                                                                       nombre:
@@ -322,6 +323,7 @@ module.exports = {
                                                     //Crear el objeto y el response
                                                     usuarioObj = {
                                                       _id: usuarioInfo._id,
+                                                      foto: usuarioInfo.foto,
                                                       _nombre: {
                                                         _id: nombreInfo._id,
                                                         nombre:

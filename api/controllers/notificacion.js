@@ -37,7 +37,7 @@ module.exports = {
         for (let notificacion of notificaciones) {
           listaNotificacion.push({
             _id: notificacion._id,
-            _solicitudTrabajo: notificacion._solicitudTrabajo,
+            idParametra: notificacion.idParametra,
             _desempleo: notificacion._desempleo,
             _empresa: notificacion._empresa,
             accion: notificacion.accion,
@@ -62,7 +62,7 @@ module.exports = {
     modeloNotificacion.findByIdAndUpdate(
       req.params.id,
       {
-        _solicitudTrabajo: req.body._solicitudTrabajo,
+        idParametra: req.body.idParametra,
         _desempleo: req.body._desempleo,
         _empresa: req.body._empresa,
         accion: req.body.accion,
@@ -103,7 +103,7 @@ module.exports = {
   create: function (req, res, next) {
     modeloNotificacion.create(
       {
-        _solicitudTrabajo: req.body._solicitudTrabajo,
+        idParametra: req.body.idParametra,
         _desempleo: req.body._desempleo,
         _empresa: req.body._empresa,
         accion: req.body.accion,

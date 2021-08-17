@@ -2,6 +2,7 @@
  * Dependencias para el servidor
  *
  */
+require("dotenv").config();
 const express = require("express");
 const logger = require("morgan");
 const categoriaEmpresas = require("./routes/categoriaEmpresas");
@@ -95,7 +96,7 @@ app.get("/", function (req, res) {
 app.use(express.json());
 
 //Ruta publico
-app.use("/usuarios", usuarios);
+app.use("/usuarios", upload.single("file"), usuarios);
 
 //Ruta privada
 //validarUsuario agregarla en la mitad
