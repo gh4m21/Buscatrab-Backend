@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 //Define a schema
 const Schema = mongoose.Schema;
 
-const schemaSolictudTrabajo = new Schema({
+const schemaSolicitudTrabajo = new Schema({
   _publicacionTrabajo: {
     type: Schema.Types.ObjectId,
     ref: "PublicacionTrabajo",
@@ -56,4 +56,4 @@ const schemaSolictudTrabajo = new Schema({
 });
 
 //export el modelo
-module.exports = mongoose.model("SolicitudTrabajos", schemaSolictudTrabajo);
+module.exports = mongoose.model("SolicitudTrabajos", schemaSolicitudTrabajo);
