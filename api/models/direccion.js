@@ -45,4 +45,4 @@ const schemaDireccion = new Schema({
 });
 
 //export el modelo
-module.exports = mongoose.model("direccion", schemaDireccion);
+module.exports = mongoose.model("Direccion", schemaDireccion);

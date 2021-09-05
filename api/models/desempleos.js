@@ -66,10 +66,6 @@ const schemaDesempleos = new Schema({
       trim: true,
     },
   ],
-  acercaDe: {
-    type: String,
-    trim: true,
-  },
   fechaCreacion: {
     type: Date,
     required: true,

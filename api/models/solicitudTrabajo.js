@@ -56,4 +56,4 @@ const schemaSolictudTrabajo = new Schema({
 });
 
 //export el modelo
-module.exports = mongoose.model("solicitudTrabajo", schemaSolictudTrabajo);
+module.exports = mongoose.model("SolicitudTrabajos", schemaSolictudTrabajo);
